@@ -80,7 +80,11 @@ namespace PRESENTATION
             {
                
                 int bonus = CalculateBonusScore();
-                totalScore += bonus;
+
+                if (totalScore > 0)
+                    totalScore += bonus;
+                else
+                    bonus = 0;
 
                 EventManager.Raise<SubmitLayerScoreEvent>(new SubmitLayerScoreEvent { layerID = this.layerID, correctAns = correctAnswers, timeTaken = (int)startTime, BonusScore = bonus, score = totalScore }) ;
             }
