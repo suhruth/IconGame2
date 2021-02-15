@@ -14,12 +14,18 @@ namespace PRESENTATION
         public List<Text> points = new List<Text>();
         public List<Text> bonusPoints = new List<Text>();
         public List<Text> layerTotalPoints = new List<Text>();
+        public Text txt_totalScore;
        
         // Start is called before the first frame update
         void Start()
         {
             EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
              EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
+        }
+
+        public void OnEnable()
+        {
+            EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
         }
 
         // Update is called once per frame
@@ -32,16 +38,23 @@ namespace PRESENTATION
         {
             if (obj is SetPlayerScoreEvent)
             {
+                int total = 0;
                 SetPlayerScoreEvent ps = (SetPlayerScoreEvent)obj;
                 for (int i = 0; i < ps.layers.Count; i++)
                 {
-                    if (layerID.Count > i) layerID[i].text = i.ToString();
+                    if (layerID.Count > i) layerID[i].text = "LEVEL " + i.ToString();
                     if (correctAnswer.Count > i) correctAnswer[i].text = ps.layers[i].correctAns.ToString();
                     if (timeTaken.Count > i) timeTaken[i].text = ps.layers[i].TimeTaken.ToString();
                     if (points.Count > i) points[i].text = (ps.layers[i].TotalPoints - ps.layers[i].bonusPoints).ToString();
                     if (bonusPoints.Count > 1) bonusPoints[i].text = ps.layers[i].bonusPoints.ToString();
-                    if (layerTotalPoints.Count > 1) layerTotalPoints[i].text = ps.layers[i].TotalPoints.ToString();
+                    if (layerTotalPoints.Count > 1)
+                    {
+                        total += ps.layers[i].TotalPoints;
+                        layerTotalPoints[i].text = ps.layers[i].TotalPoints.ToString();
+                    }
                 }
+                if (txt_totalScore != null)
+                    txt_totalScore.text = total.ToString();
             }
         }
     }

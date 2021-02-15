@@ -8,12 +8,14 @@ namespace PRESENTATION
 {
     public class UILayerMultipleChoise : UIScreen
     {
+        public Button btn_Submit;
+        public Text txt_Timer;
         public Text txt_Msg;
         public int layerID = -1;
         float startTime = 0.0f;
 
-        List<ToggleGroup> questions = new List<ToggleGroup>();
-        List<Toggle> answers = new List<Toggle>();
+        public List<ToggleGroup> questions = new List<ToggleGroup>();
+        public List<Toggle> answers = new List<Toggle>();
         public int PointsPerAnswer = 20;
         public bool winAllForBonus = true;
         public float bonusPerInterval = 5;
@@ -24,23 +26,28 @@ namespace PRESENTATION
             if (layerID < 0)
                 Debug.LogError("Invalid Layer ID");
 
+            if (btn_Submit != null)
+                btn_Submit.onClick.AddListener(Submit_OnClick);
         }
 
         // Update is called once per frame
         void Update()
         {
             startTime += Time.deltaTime;
+            if (txt_Timer != null && startTime < 61)
+                txt_Timer.text = (((int)startTime).ToString() + " sec");
         }
         private int CalculateBonusScore()
         {
             int score = 0;
             if (startTime < 1) startTime = 1;
-            int bonusMultiply = 30 / (int)startTime;
-            if (startTime % 5 > 0) bonusMultiply += 1;
-
-            if (winAllForBonus)
+            int bonusMultiply = 0;
+            if (startTime < 30.0f)
+            {
+                bonusMultiply = (int)startTime / 5;
+                bonusMultiply = 6 - bonusMultiply;
                 score += (int)(bonusMultiply * bonusPerInterval);
-
+            }
             return score;
         }
 

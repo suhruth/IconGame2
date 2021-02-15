@@ -5,8 +5,8 @@ using CustomEvent;
 
 public class AppManager : MonoBehaviour
 {
-    public string userName;
-    public string companyName;
+    string userName;
+    string companyName;
 
     private List<LayerScore> scores = new List<LayerScore>();
 

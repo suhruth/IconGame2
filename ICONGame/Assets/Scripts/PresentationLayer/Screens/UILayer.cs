@@ -10,10 +10,11 @@ namespace PRESENTATION
     {
         public List<Question> Questions;
         public List<Answer> Options;
+        public Button btn_Submit;
+        public Text txt_Timer;
         public Text txt_Msg;
         public int layerID = -1;
         float startTime = 0.0f;
-        public bool winAllForBonus = true;
         public float bonusPerInterval = 5;
         public int PointsPerAnswer = 10;
         public void OnEnable()
@@ -36,29 +37,37 @@ namespace PRESENTATION
                     break;
                 }
             }
+
+            if (btn_Submit != null)
+                btn_Submit.onClick.AddListener(SubmitScore_OnClick);
         }
+    
 
         // Update is called once per frame
         void Update()
         {
             startTime += Time.deltaTime;
+            if (txt_Timer != null && startTime < 61)
+                txt_Timer.text = (((int)startTime).ToString() + " sec");
         }
 
         private int CalculateBonusScore()
         {
             int score = 0;
             if (startTime < 1) startTime = 1;
-            int bonusMultiply = 30 / (int)startTime;
-            if (startTime % 5 > 0) bonusMultiply += 1;
-            
-            if(winAllForBonus)
+            int bonusMultiply = 0;
+            if (startTime < 30.0f)
+            {
+                bonusMultiply = (int)startTime / 5;
+                bonusMultiply = 6 - bonusMultiply;
                 score += (int)(bonusMultiply * bonusPerInterval);
-
+            }
             return score;
         }
 
         public void SubmitScore_OnClick()
         {
+            Question.Clear();
             int correctAnswers = 0;
             bool allQuestionsAnswered = true;
             foreach (Question q in Questions)
