@@ -113,6 +113,7 @@ public class AppManager : MonoBehaviour
     {
         sendShowScreen = true;
         screen = UIScreenType.SignIn;
+        Application.Quit();
     }
     public void OnSubmitLayerScoreEvent(IEventBase obj)
     {
