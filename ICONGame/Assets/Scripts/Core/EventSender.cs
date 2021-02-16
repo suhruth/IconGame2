@@ -1,0 +1,24 @@
+﻿using CustomEvent;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EventSender : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void OnBtnClick()
+    {
+        EventManager.Raise<TestMessageEvent>(new TestMessageEvent() { msg = "TEST STRING MSG"});
+    }
+}

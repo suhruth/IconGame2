@@ -2,7 +2,7 @@
 
 namespace CustomEvent
 {
-    public class SimpleEvent : IEventBase { }
+    //public class SimpleEvent : IEventBase { }
 
     // initialize 
     // state change event
