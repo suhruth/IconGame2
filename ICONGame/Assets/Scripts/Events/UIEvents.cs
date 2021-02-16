@@ -15,6 +15,7 @@ namespace CustomEvent
     #region FROM_UI
 
     public class SubmitUserCredentialsEvent : IEventBase { public string userName; public string companyName; }
+    public class MainMenuUIEvent : IEventBase { }
     public class PlayGameUIEvent : IEventBase { }
     public class InstructionsUIEvent : IEventBase { }
     public class LeaderBoardUIEvent : IEventBase { }

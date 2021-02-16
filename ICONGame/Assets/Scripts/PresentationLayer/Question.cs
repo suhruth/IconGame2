@@ -8,11 +8,18 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Button btn_Que;
     public GameObject dragObject;
     public Answer correctAnswer;
+    public Animator anim;
+
     private Answer selectedAnswer;
     public Answer Selected { get { return selectedAnswer; } set { selectedAnswer = value; } }
     private int score;
     public int Score { get { return score; } set { score = value; } }
     public Canvas myCanvas;
+
+
+    float pulseTimer = 0.0f;
+    public float PulseTime { set { pulseTimer = value; } }
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +38,16 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // Update is called once per frame
     void Update()
     {
-       // selectedAnswer = correctAnswer;
+        if (pulseTimer > 0.0f)
+        {
+            pulseTimer -= Time.deltaTime;
+            if (pulseTimer < 0.0f)
+            {
+                anim.SetBool("PlayPulse", false);
+                pulseTimer = 0.0f;
+            }
+        }
+        // selectedAnswer = correctAnswer;
         if (isDragging)
         {
             if (lr != null && dragObject != null)
@@ -55,6 +71,12 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
         }
 
+    }
+
+    public void DoPulseAnim()
+    {
+        anim.SetBool("PlayPulse", true);
+        pulseTimer = 1.25f;
     }
 
     Vector2 dragOrgPos = new Vector2();
@@ -96,13 +118,12 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if (que != activeQue)
         {
-            if (activeQue != null)
-                activeQue.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-
+            //if (activeQue != null)
+            //    activeQue.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            que.DoPulseAnim();
             activeQue = que;
-
-            if (activeQue != null)
-                activeQue.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            //if (activeQue != null)
+            //    activeQue.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
     }
 
@@ -116,13 +137,15 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             if (activeQue != null)
             {
                 activeAns = ans;
+                activeQue.anim.SetBool("PlayPulse", false);
 
                 if (activeAns != null)
                 {
                    // activeAns.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                     activeQue.Selected = activeAns;
+                    activeAns.DoPulseAnim();
 
-                    activeQue.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                    //activeQue.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                     //activeAns.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                     activeQue = null;
                     activeAns = null;

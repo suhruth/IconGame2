@@ -11,9 +11,13 @@ namespace PRESENTATION
     {
         public GameObject content;
         public GameObject itemPrefab;
+        public Button btn_MainMenu;
+
         // Start is called before the first frame update
         void Start()
         {
+            btn_MainMenu.onClick.AddListener(MainMenu_OnClick);
+
             if (itemPrefab == null)
                 Debug.LogError("Invalid item prefab");
 
@@ -22,12 +26,18 @@ namespace PRESENTATION
 
             EventManager.Listen<SetLeaderboardEvent>(OnLeaderboardEvent);
             EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
+
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void MainMenu_OnClick()
+        {
+            EventManager.Raise<MainMenuUIEvent>(new MainMenuUIEvent { });
         }
 
         public void OnLeaderboardEvent(IEventBase obj)

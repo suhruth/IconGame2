@@ -11,7 +11,7 @@ namespace PRESENTATION
         public Button btn_PlayGame;
         public Button btn_Instructions;
         public Button btn_LeaderBoard;
-        public Button btn_Prizes;
+        //public Button btn_Prizes;
         public Button btn_Quit;
 
 
@@ -22,7 +22,7 @@ namespace PRESENTATION
             btn_PlayGame.onClick.AddListener(OnClick_PlayGame);
             btn_Instructions.onClick.AddListener(OnClick_Instructions);
             btn_LeaderBoard.onClick.AddListener(OnClick_LeaderBoard);
-            btn_Prizes.onClick.AddListener(OnClick_Prizes);
+            //btn_Prizes.onClick.AddListener(OnClick_Prizes);
             btn_Quit.onClick.AddListener(OnClick_Quit);
         }
 

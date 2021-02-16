@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CustomEvent;
 
 public class LeaderBoardItem : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class LeaderBoardItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void MainMenu_OnClick()
+    {
+        EventManager.Raise<MainMenuUIEvent>(new MainMenuUIEvent { });
     }
 }

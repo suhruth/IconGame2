@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class Answer : MonoBehaviour, IDropHandler
 {
     private Button btn_Ans;
+    public Animator anim;
+    float pulseTimer = 0.0f;
+    public float PulseTime { set { pulseTimer = value; } }
+
     public void OnDrop(PointerEventData eventData)
     {
         //Debug.Log("From Answer");
@@ -33,7 +37,22 @@ public class Answer : MonoBehaviour, IDropHandler
     // Update is called once per frame
     void Update()
     {
-        
+        if (pulseTimer > 0.0f)
+        {
+            pulseTimer -= Time.deltaTime;
+            if (pulseTimer < 0.0f)
+            {
+                anim.SetBool("PlayPulse", false);
+                pulseTimer = 0.0f;
+            }
+        }
+
+    }
+
+    public void DoPulseAnim()
+    {
+        anim.SetBool("PlayPulse", true);
+        pulseTimer = 1.25f;
     }
 
     public void OnClick_Answer()

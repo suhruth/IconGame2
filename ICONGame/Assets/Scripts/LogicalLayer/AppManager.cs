@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CustomEvent;
+using WebServer;
+using WebServer.Data;
+using FRAMEWORK.WebServer;
+using System;
 
 public class AppManager : MonoBehaviour
 {
@@ -12,6 +16,11 @@ public class AppManager : MonoBehaviour
 
     public int NoOfLayers = 4;
 
+    private static IServer server;
+    public static IServer webServer { get { if (server == null) server = new RemoteServer(); return server; } }
+
+    public string BaseURL = "http://localhost:9906?a=";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +30,7 @@ public class AppManager : MonoBehaviour
             scores.Add(new LayerScore());
 
         EventManager.Listen<SubmitUserCredentialsEvent>(OnSubmitUserCredentialsEvent);
+        EventManager.Listen<MainMenuUIEvent>(OnMainMenuEvent);
         EventManager.Listen<PlayGameUIEvent>(OnPlayGameEvent);
         EventManager.Listen<InstructionsUIEvent>(OnInstructionsEvent);
         EventManager.Listen<LeaderBoardUIEvent>(OnLeaderboardEvent);
@@ -29,6 +39,8 @@ public class AppManager : MonoBehaviour
         EventManager.Listen<SubmitLayerScoreEvent>(OnSubmitLayerScoreEvent);
         EventManager.Listen<GetPlayerScoreEvent>(OnGetPlayerScoreEvent);
         EventManager.Listen<GetLeaderboardEvent>(OnGetLeaderboardEvent);
+
+        webServer.SetBaseURL(BaseURL);
     }
 
     bool sendShowScreen = false;
@@ -68,6 +80,7 @@ public class AppManager : MonoBehaviour
         for (int i = 0; i < scores.Count; i++)
             playerScore.totalScore += scores[i].TotalPoints;
         EventManager.Raise<SetPlayerScoreEvent>(playerScore);
+       // WebServerManager.UpdateUserScore(userName, companyName, playerScore.totalScore.ToString(), OnSendScoreToServerSuccessfully, OnSendScoreToServerFailed);
     }
 
     private void OnSendLeaderBoardData()
@@ -89,6 +102,14 @@ public class AppManager : MonoBehaviour
             screen = UIScreenType.MainMenu;
         }
     }
+
+
+    private void OnMainMenuEvent(IEventBase obj)
+    {
+        sendShowScreen = true;
+        screen = UIScreenType.MainMenu;
+    }
+
     public void OnPlayGameEvent(IEventBase obj)
     {
         sendShowScreen = true;
@@ -156,6 +177,30 @@ public class AppManager : MonoBehaviour
     {
         sendLeaderBoardData = true;
         leaderBoardDataReady = false;
+       // WebServerManager.GetLeaderBoardData(OnGetLeaderboardDataSuccessfully, OnGetLeaderboardDataFailed);
     }
+
+    #region NETWORKING
+
+    private void OnSendScoreToServerFailed(string obj, string code)
+    {
+    }
+
+    private void OnSendScoreToServerSuccessfully()
+    {
+        //EventManager.Raise<MyMeetupsDataEvent>(new MyMeetupsDataEvent { data = obj });
+    }
+
+    private void OnGetLeaderboardDataFailed(string obj, string code)
+    {
+        leaderBoardDataReady = true;
+    }
+
+    private void OnGetLeaderboardDataSuccessfully(LeaderboardData data)
+    {
+        leaderBoardDataReady = true;
+        //EventManager.Raise<MyMeetupsDataEvent>(new MyMeetupsDataEvent { data = obj });
+    }
+    #endregion
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CustomEvent;
+using System;
 
 namespace PRESENTATION
 {
@@ -15,14 +16,19 @@ namespace PRESENTATION
         public List<Text> bonusPoints = new List<Text>();
         public List<Text> layerTotalPoints = new List<Text>();
         public Text txt_totalScore;
-       
+
+        public Button btn_MainMenu;
+        public Button btn_Quit;
+
         // Start is called before the first frame update
         void Start()
         {
+            btn_MainMenu.onClick.AddListener(MainMenu_OnClick);
+            btn_Quit.onClick.AddListener(Quit_OnClick);
+
             EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
              EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
         }
-
         public void OnEnable()
         {
             EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
@@ -33,6 +39,17 @@ namespace PRESENTATION
         {
 
         }
+
+        private void Quit_OnClick()
+        {
+            EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
+        }
+
+        private void MainMenu_OnClick()
+        {
+            EventManager.Raise<MainMenuUIEvent>(new MainMenuUIEvent { });
+        }
+
 
         public void OnPlayerScoreEvent(IEventBase obj)
         {
