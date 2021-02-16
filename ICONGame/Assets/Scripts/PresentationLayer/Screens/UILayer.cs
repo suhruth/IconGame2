@@ -20,6 +20,8 @@ namespace PRESENTATION
         public void OnEnable()
         {
             startTime = 0.0f;
+            for (int i = 0; i < Questions.Count; i++)
+                Questions[i].Selected = null;
         }
         // Start is called before the first frame update
         

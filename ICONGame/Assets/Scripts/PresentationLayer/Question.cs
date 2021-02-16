@@ -122,6 +122,7 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             //    activeQue.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             que.DoPulseAnim();
             activeQue = que;
+            activeQue.Selected = null;
             //if (activeQue != null)
             //    activeQue.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }

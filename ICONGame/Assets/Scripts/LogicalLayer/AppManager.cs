@@ -113,7 +113,7 @@ public class AppManager : MonoBehaviour
     public void OnPlayGameEvent(IEventBase obj)
     {
         sendShowScreen = true;
-        screen = UIScreenType.Layer1;
+        screen = UIScreenType.Layer4;
     }
     public void OnInstructionsEvent(IEventBase obj)
     {

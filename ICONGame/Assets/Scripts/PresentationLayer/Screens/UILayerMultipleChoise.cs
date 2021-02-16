@@ -19,6 +19,13 @@ namespace PRESENTATION
         public int PointsPerAnswer = 20;
         public bool winAllForBonus = true;
         public float bonusPerInterval = 5;
+
+        public void OnEnable()
+        {
+            startTime = 0.0f;
+            for (int i = 0; i < questions.Count; i++)
+                questions[i].SetAllTogglesOff();
+        }
         // Start is called before the first frame update
         void Start()
         {
