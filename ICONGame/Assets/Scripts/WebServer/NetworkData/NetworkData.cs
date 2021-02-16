@@ -16,5 +16,16 @@ namespace WebServer.Data
 
     [JsonProperty("data")]
     public object Data;
+
   }
+
+    public class NetworkData2
+    {
+        [JsonProperty("a")]
+        public string type;
+
+        [JsonProperty("list")]
+        public object Data;
+
+    }
 }

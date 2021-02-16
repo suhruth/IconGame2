@@ -15,9 +15,12 @@ public class LeaderboardItem
 
     [JsonProperty("score")]
     public string Score { get; set; }
+
+    [JsonProperty("rank")]
+    public int Rank { get; set; }
 }
 public class LeaderboardData
 {
         [JsonProperty("list")]
-    public IList<LeaderBoardItem> Items { get; set; }
+    public List<LeaderboardItem> Items { get; set; }
 }

@@ -25,7 +25,7 @@ namespace PRESENTATION
                 Debug.LogError("Invalid scroll view content");
 
             EventManager.Listen<SetLeaderboardEvent>(OnLeaderboardEvent);
-            EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
+            EventManager.Raise<GetLeaderboardEvent>(new GetLeaderboardEvent());
 
         }
 
@@ -39,7 +39,6 @@ namespace PRESENTATION
         {
             EventManager.Raise<MainMenuUIEvent>(new MainMenuUIEvent { });
         }
-
         public void OnLeaderboardEvent(IEventBase obj)
         {
             if (content == null || itemPrefab == null) return;
@@ -54,15 +53,21 @@ namespace PRESENTATION
             if (obj is SetLeaderboardEvent)
             {
                 SetLeaderboardEvent lb = (SetLeaderboardEvent)obj;
-                for (int i = 0; i < lb.leaderboard.Count; i++)
+
+                lb.leaderboard.Items.Sort((x, y) => {
+                    return string.Compare(y.Score, x.Score);
+                });
+
+                for (int i = 0; i < lb.leaderboard.Items.Count; i++)
                 {
                     GameObject newItem = Instantiate(itemPrefab, content.transform) as GameObject;
                     LeaderBoardItem lbi = newItem.GetComponent<LeaderBoardItem>();
                     if (lbi != null)
                     {
-                        lbi.txt_Rank.text = lb.leaderboard[i].rank.ToString();
-                        lbi.txt_Name.text = lb.leaderboard[i].name;
-                        lbi.txt_Points.text = lb.leaderboard[i].points.ToString();
+                        lbi.txt_Rank.text = lb.leaderboard.Items[i].Rank.ToString();
+                        lbi.txt_Name.text = lb.leaderboard.Items[i].Username;
+                        lbi.txt_Points.text = lb.leaderboard.Items[i].Score.ToString();
+                       // lbi.transform.parent = content.transform;
                     }
                 }
             }

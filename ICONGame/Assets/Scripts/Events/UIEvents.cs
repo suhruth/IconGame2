@@ -43,14 +43,7 @@ namespace CustomEvent
 
     public class SetPlayerScoreEvent : IEventBase { public List<LayerScore> layers = new List<LayerScore>(); public int totalScore; }
 
-    public class LeaderboardItem
-    {
-        public int rank;
-        public string name;
-        public int points;
-    }
-
-    public class SetLeaderboardEvent : IEventBase { public List<LeaderboardItem> leaderboard = new List<LeaderboardItem>(); }
+    public class SetLeaderboardEvent : IEventBase { public LeaderboardData leaderboard = new LeaderboardData(); }
 
     #endregion // MAINMENU_EVENTS_TO_UI
 

@@ -80,14 +80,14 @@ public class AppManager : MonoBehaviour
         for (int i = 0; i < scores.Count; i++)
             playerScore.totalScore += scores[i].TotalPoints;
         EventManager.Raise<SetPlayerScoreEvent>(playerScore);
-       // WebServerManager.UpdateUserScore(userName, companyName, playerScore.totalScore.ToString(), OnSendScoreToServerSuccessfully, OnSendScoreToServerFailed);
+
+        WebServerManager.UpdateUserScore(userName, companyName, playerScore.totalScore.ToString(), OnSendScoreToServerSuccessfully, OnSendScoreToServerFailed);
     }
 
+    SetLeaderboardEvent leaderBoard = new SetLeaderboardEvent();
     private void OnSendLeaderBoardData()
     {
-        SetLeaderboardEvent leaderBoard = new SetLeaderboardEvent();
         // fill  the data once received from server.
-
         EventManager.Raise<SetLeaderboardEvent>(leaderBoard);
     }
 
@@ -113,7 +113,7 @@ public class AppManager : MonoBehaviour
     public void OnPlayGameEvent(IEventBase obj)
     {
         sendShowScreen = true;
-        screen = UIScreenType.Layer4;
+        screen = UIScreenType.Layer1;
     }
     public void OnInstructionsEvent(IEventBase obj)
     {
@@ -177,29 +177,34 @@ public class AppManager : MonoBehaviour
     {
         sendLeaderBoardData = true;
         leaderBoardDataReady = false;
-       // WebServerManager.GetLeaderBoardData(OnGetLeaderboardDataSuccessfully, OnGetLeaderboardDataFailed);
+        WebServerManager.GetLeaderBoardData(OnGetLeaderboardDataSuccessfully, OnGetLeaderboardDataFailed);
     }
 
     #region NETWORKING
 
     private void OnSendScoreToServerFailed(string obj, string code)
     {
+        Debug.Log("Failed to Sending score to server !!!!!");
     }
 
     private void OnSendScoreToServerSuccessfully()
     {
-        //EventManager.Raise<MyMeetupsDataEvent>(new MyMeetupsDataEvent { data = obj });
+        Debug.Log("Success Sending score to server !!!!!");
     }
 
     private void OnGetLeaderboardDataFailed(string obj, string code)
     {
         leaderBoardDataReady = true;
+        Debug.Log("Failed to Get Leaderboard data from server !!!!!");
     }
 
     private void OnGetLeaderboardDataSuccessfully(LeaderboardData data)
     {
+        Debug.Log("Success in Getting Leaderboard data from server !!!!!");
+        if (data != null)
+            leaderBoard.leaderboard = data;
+
         leaderBoardDataReady = true;
-        //EventManager.Raise<MyMeetupsDataEvent>(new MyMeetupsDataEvent { data = obj });
     }
     #endregion
 

@@ -276,20 +276,31 @@ namespace WebServer
         {
             //Debug.Log(request.downloadHandler.text);
 
-            if (request.downloadHandler.text.TryDeserialize<NetworkData>(out var networkData))
+            //if (request.downloadHandler.text.TryDeserialize<NetworkData>(out var networkData))
+            //{
+            //    if (networkData.Status)
+            //    {
+            //        successHandler?.Invoke(networkData.Data.ToJson());
+            //    }
+            //    else
+            //    {
+            //        exceptionHandler?.Invoke(networkData.Message, "");
+            //    }
+            //}
+            if (request.downloadHandler.text.TryDeserialize<NetworkData2>(out var networkData))
             {
-                if (networkData.Status)
+                if (networkData.type.Length > 0)
                 {
-                    successHandler?.Invoke(networkData.Data.ToJson());
+                    successHandler?.Invoke(request.downloadHandler.text);
                 }
                 else
                 {
-                    exceptionHandler?.Invoke(networkData.Message, "");
+                    exceptionHandler?.Invoke("Failed Fetching data", "");
                 }
             }
             else
             {
-                exceptionHandler?.Invoke("Unable to deserialze the data", networkData.Code);
+                exceptionHandler?.Invoke("Unable to deserialze the data", "Invalid");
             }
         }
     }
