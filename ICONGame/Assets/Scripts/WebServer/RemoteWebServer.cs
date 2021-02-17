@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using MEC;
 using WebServer.Data;
+using MiniJSON;
 
 namespace WebServer
 {
@@ -287,21 +288,44 @@ namespace WebServer
             //        exceptionHandler?.Invoke(networkData.Message, "");
             //    }
             //}
-            if (request.downloadHandler.text.TryDeserialize<NetworkData2>(out var networkData))
+            //Debug.LogError("data ===== " + request.downloadHandler.text);
+            //UIManager.SetDebugText(request.downloadHandler.text);
+
+            string tempStr = request.downloadHandler.text;
+            int startVal = tempStr.IndexOf("[")+2;
+            int endVal = tempStr.IndexOf("]") - 1;
+            if (startVal < endVal)
             {
-                if (networkData.type.Length > 0)
-                {
-                    successHandler?.Invoke(request.downloadHandler.text);
-                }
-                else
-                {
-                    exceptionHandler?.Invoke("Failed Fetching data", "");
-                }
+                successHandler?.Invoke(request.downloadHandler.text);
             }
             else
             {
-                exceptionHandler?.Invoke("Unable to deserialze the data", "Invalid");
+                exceptionHandler?.Invoke("Failed Fetching data", "");
             }
+           
+
+            //Json.Deserialize(request.downloadHandler.text);
+            //var dict = Json.Deserialize(request.downloadHandler.text) as Dictionary<String, System.Object>;
+            //var arrayList = new List< System.Object > ();
+            //arrayList = ((dict["list"]) as List< System.Object >);
+
+            //UIManager.SetDebugText(arrayList[0].ToString());
+            //Debug.Log("array[0]: " + arrayList[0]);
+            //if (request.downloadHandler.text.TryDeserialize<NetworkData2>(out var networkData))
+            //{
+            //    if (networkData.type.Length > 0)
+            //    {
+            //        successHandler?.Invoke(request.downloadHandler.text);
+            //    }
+            //    else
+            //    {
+            //        exceptionHandler?.Invoke("Failed Fetching data", "");
+            //    }
+            //}
+            //else
+            //{
+            //    exceptionHandler?.Invoke("Unable to deserialze the data", "Invalid");
+            //}
         }
     }
 }

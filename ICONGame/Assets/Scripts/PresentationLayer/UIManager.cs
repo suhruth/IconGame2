@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CustomEvent;
+using UnityEngine.UI;
+
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject signInScreen;
@@ -22,9 +24,20 @@ public class UIManager : MonoBehaviour
 
     public UIScreenType StartingScreen = UIScreenType.SignIn;
 
+    public Text txt_Debug;
+
+    public static UIManager uiManager;
+    public static void SetDebugText(string str)
+    {
+        if (uiManager != null && uiManager.txt_Debug != null)
+            uiManager.txt_Debug.text = str;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = this;
+
         allScreens.Clear();
 
         allScreens.Add(UIScreenType.SignIn, signInScreen);

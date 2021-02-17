@@ -82,7 +82,7 @@ namespace PRESENTATION
                     LeaderBoardItem lbi = newItem.GetComponent<LeaderBoardItem>();
                     if (lbi != null)
                     {
-                        lbi.txt_Rank.text = lb.leaderboard.Items[i].Rank.ToString();
+                        lbi.txt_Rank.text = (i + 1).ToString(); //lb.leaderboard.Items[i].Rank.ToString();
                         lbi.txt_Name.text = lb.leaderboard.Items[i].Username;
                         lbi.txt_Points.text = lb.leaderboard.Items[i].Score.ToString();
                        // lbi.transform.parent = content.transform;

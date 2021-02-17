@@ -20,6 +20,16 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     float pulseTimer = 0.0f;
     public float PulseTime { set { pulseTimer = value; } }
 
+    public void Clean()
+    {
+        selectedAnswer = null;
+        if (lr != null)
+            lr.positionCount = 0;
+        if (anim != null)
+        {
+            anim.SetBool("PlayPulse", false);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +62,7 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             if (lr != null && dragObject != null)
             {
+                if (lr.positionCount == 0) lr.positionCount = 2;
                 if (Vector3.Distance(gameObject.transform.position, dragObject.transform.position) > .1f)
                 {
                     lr.SetPosition(0, gameObject.transform.position);
@@ -63,6 +74,7 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             if (lr != null && selectedAnswer != null)
             {
+                if (lr.positionCount == 0) lr.positionCount = 2;
                 if (Vector3.Distance(gameObject.transform.position, selectedAnswer.gameObject.transform.position) > .1f)
                 {
                     lr.SetPosition(0, gameObject.transform.position);

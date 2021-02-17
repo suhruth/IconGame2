@@ -24,6 +24,11 @@ public class Answer : MonoBehaviour, IDropHandler
         //    }
         //}
     }
+    public void Clean()
+    {
+        if (anim != null)
+            anim.SetBool("PlayPulse", false);
+    }
 
     // Start is called before the first frame update
     void Start()

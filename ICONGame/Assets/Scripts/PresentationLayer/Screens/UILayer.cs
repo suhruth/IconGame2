@@ -21,7 +21,10 @@ namespace PRESENTATION
         {
             startTime = 0.0f;
             for (int i = 0; i < Questions.Count; i++)
-                Questions[i].Selected = null;
+                Questions[i].Clean();
+
+            for (int i = 0; i < Options.Count; i++)
+                Options[i].Clean();
         }
         // Start is called before the first frame update
         
