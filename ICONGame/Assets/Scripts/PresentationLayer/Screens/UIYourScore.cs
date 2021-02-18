@@ -59,7 +59,7 @@ namespace PRESENTATION
                 SetPlayerScoreEvent ps = (SetPlayerScoreEvent)obj;
                 for (int i = 0; i < ps.layers.Count; i++)
                 {
-                    if (layerID.Count > i) layerID[i].text = "LEVEL " + i.ToString();
+                    if (layerID.Count > i) layerID[i].text = "LEVEL " + (i+1).ToString();
                     if (correctAnswer.Count > i) correctAnswer[i].text = ps.layers[i].correctAns.ToString();
                     if (timeTaken.Count > i) timeTaken[i].text = ps.layers[i].TimeTaken.ToString();
                     if (points.Count > i) points[i].text = (ps.layers[i].TotalPoints - ps.layers[i].bonusPoints).ToString();
