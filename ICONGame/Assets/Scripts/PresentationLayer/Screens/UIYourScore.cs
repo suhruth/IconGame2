@@ -19,10 +19,12 @@ namespace PRESENTATION
 
         public Button btn_MainMenu;
         public Button btn_Quit;
-
+        public AudioClip ac;
+        public SoundManager SM;
         // Start is called before the first frame update
         void Start()
         {
+            SM.OnOptionClick(ac);
             btn_MainMenu.onClick.AddListener(MainMenu_OnClick);
             btn_Quit.onClick.AddListener(Quit_OnClick);
 

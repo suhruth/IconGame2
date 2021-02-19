@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
 
     public Text txt_Debug;
 
+    [SerializeField] Texture2D CursorTexture;
+
     public static UIManager uiManager;
     public static void SetDebugText(string str)
     {
@@ -33,6 +35,10 @@ public class UIManager : MonoBehaviour
             uiManager.txt_Debug.text = str;
     }
 
+    private void Awake()
+    {
+        Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.ForceSoftware);
+    }
     // Start is called before the first frame update
     void Start()
     {
