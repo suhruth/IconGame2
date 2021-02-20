@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 
     public Text txt_Debug;
 
-    [SerializeField] Texture2D CursorTexture;
+    [SerializeField] Texture2D CursorTexture, HandCursorTexture;
 
     public static UIManager uiManager;
     public static void SetDebugText(string str)
@@ -96,5 +96,13 @@ public class UIManager : MonoBehaviour
     {
         if (obj is ShowUIScreenEvent)
             ShowScreen(((ShowUIScreenEvent)obj)._screen);
+    }
+
+    public void OnMouseHoverOnCircle(bool isHover)
+    {
+      if(isHover)
+        Cursor.SetCursor(HandCursorTexture, Vector2.zero, CursorMode.ForceSoftware);
+      else
+        Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.ForceSoftware);
     }
 }
