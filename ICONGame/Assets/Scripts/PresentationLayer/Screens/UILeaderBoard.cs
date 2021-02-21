@@ -66,15 +66,13 @@ namespace PRESENTATION
                     return;
                 }
 
-
-
-                if (lb.leaderboard.Items.Count > 1)
-                {
-                    lb.leaderboard.Items.Sort((x, y) =>
-                    {
-                        return string.Compare(y.Score, x.Score);
-                    });
-                }
+                //if (lb.leaderboard.Items.Count > 1)
+                //{
+                //    lb.leaderboard.Items.Sort((x, y) =>
+                //    {
+                //        return string.Compare(y.Score, x.Score);
+                //    });
+                //}
 
                 for (int i = 0; i < lb.leaderboard.Items.Count; i++)
                 {
