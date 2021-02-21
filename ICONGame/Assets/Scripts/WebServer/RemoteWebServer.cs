@@ -88,7 +88,8 @@ namespace WebServer
             Debug.Log(string.Format("[REQUEST] URL : {0}, DATA : {1}", url, data));
 
             UnityWebRequest request = UnityWebRequest.Post(url, data);
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            UIManager.SetDebugText(1, url);
+        //     request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             request.SendWebRequest();
 
             while (!request.isDone)
@@ -111,7 +112,8 @@ namespace WebServer
             //Debug.Log(string.Format("[REQUEST] URL : {0}, DATA : {1}", url, form.));
 
             UnityWebRequest request = UnityWebRequest.Post(url, form);
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            UIManager.SetDebugText(1, url);
+         //   request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             Debug.Log(url);
 
             if (headers != null && headers.Count > 0)
@@ -143,7 +145,8 @@ namespace WebServer
         private IEnumerator<float> PostEnumerator(string url, WWWForm form, Action successHandler, Action<string, string> exceptionHandler)
         {
             UnityWebRequest request = UnityWebRequest.Post(url, form);
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            UIManager.SetDebugText(1, url);
+           //request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             request.SendWebRequest();
 
             while (!request.isDone)
@@ -164,7 +167,8 @@ namespace WebServer
         private IEnumerator<float> PostEnumerator(string url, string data, Action successHandler, Action<string, string> exceptionHandler)
         {
             UnityWebRequest request = UnityWebRequest.Post(url, data);
-            request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+            UIManager.SetDebugText(1, url);
+           // request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
             request.SendWebRequest();
 
             while (!request.isDone)
@@ -185,7 +189,7 @@ namespace WebServer
         private IEnumerator<float> GetEnumerator(string url, Action<string> successHandler, Action<string, string> exceptionHandler)
         {
             UnityWebRequest request = UnityWebRequest.Get(url);
-
+            UIManager.SetDebugText(1, url);
             if (headers != null && headers.Count > 0)
             {
                 foreach (var header in headers)
@@ -215,6 +219,7 @@ namespace WebServer
         private IEnumerator<float> PutEnumerator(string url, string data, Action successHandler, Action<string, string> exceptionHandler)
         {
             UnityWebRequest request = UnityWebRequest.Put(url, data);
+            UIManager.SetDebugText(1, url);
             Debug.Log(url);
 
             if (headers != null && headers.Count > 0)
@@ -297,6 +302,7 @@ namespace WebServer
             int endVal = tempStr.IndexOf("]") - 1;
             if (startVal < endVal)
             {
+                UIManager.SetDebugText(0, request.downloadHandler.text);
                 successHandler?.Invoke(request.downloadHandler.text);
             }
             else

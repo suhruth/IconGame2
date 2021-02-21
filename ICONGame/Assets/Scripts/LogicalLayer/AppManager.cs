@@ -6,9 +6,16 @@ using WebServer;
 using WebServer.Data;
 using FRAMEWORK.WebServer;
 using System;
+using System.Runtime.InteropServices;
 
 public class AppManager : MonoBehaviour
 {
+
+    #region DllImport
+    [DllImport("__Internal")]
+    private static extern string GetString(string param);
+
+    #endregion
     string userName;
     string companyName;
 
@@ -20,6 +27,8 @@ public class AppManager : MonoBehaviour
     public static IServer webServer { get { if (server == null) server = new RemoteServer(); return server; } }
 
     public string BaseURL = "https://139.59.37.53:9907/?a=";
+
+    public bool displayDebugInfo = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +50,10 @@ public class AppManager : MonoBehaviour
         EventManager.Listen<GetLeaderboardEvent>(OnGetLeaderboardEvent);
 
         webServer.SetBaseURL(BaseURL);
+
+        UIManager.DisplayDebugInfo = displayDebugInfo;
+        UIManager.SetDebugText(1, "");
+        UIManager.SetDebugText(0, "");
     }
 
     bool sendShowScreen = false;
@@ -119,6 +132,8 @@ public class AppManager : MonoBehaviour
     {
         sendShowScreen = true;
         screen = UIScreenType.Instructions;
+        //string val = GetString("This is a string for Unity");
+        //UIManager.SetDebugText(1, "String from JS " + val);
     }
     public void OnLeaderboardEvent(IEventBase obj)
     {
@@ -184,6 +199,7 @@ public class AppManager : MonoBehaviour
 
     private void OnSendScoreToServerFailed(string obj, string code)
     {
+        UIManager.SetDebugText(0, obj + "  " + code);
         Debug.Log("Failed to Sending score to server !!!!!");
     }
 
@@ -194,6 +210,7 @@ public class AppManager : MonoBehaviour
 
     private void OnGetLeaderboardDataFailed(string obj, string code)
     {
+        UIManager.SetDebugText(0, obj + "  " + code);
         leaderBoardDataReady = true;
         Debug.Log("Failed to Get Leaderboard data from server !!!!!");
     }

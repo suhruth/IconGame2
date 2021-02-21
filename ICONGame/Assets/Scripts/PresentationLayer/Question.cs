@@ -131,6 +131,12 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public static Answer activeAns = null;
     public static void SetActiveQuestion(Question que)
     {
+        if (que != null && que.lr != null)
+        {
+            que.lr.positionCount = 0;
+            que.Selected = null;
+        }
+
         if (que != activeQue)
         {
             //if (activeQue != null)

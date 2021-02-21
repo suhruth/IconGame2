@@ -24,14 +24,31 @@ public class UIManager : MonoBehaviour
 
     public UIScreenType StartingScreen = UIScreenType.SignIn;
 
+    public Text txt_Debug1;
     public Text txt_Debug;
 
     [SerializeField] Texture2D CursorTexture, HandCursorTexture;
 
     public static UIManager uiManager;
-    public static void SetDebugText(string str)
+
+    public static bool DisplayDebugInfo = true;
+
+    public static void SetDebugText(int id, string str)
     {
-        if (uiManager != null && uiManager.txt_Debug != null)
+        if (!DisplayDebugInfo)
+        {
+            if (uiManager != null && uiManager.txt_Debug1 != null)
+                uiManager.txt_Debug1.gameObject.SetActive(false);
+            if (uiManager != null && uiManager.txt_Debug != null)
+                uiManager.txt_Debug.gameObject.SetActive(false);
+            return;
+        }
+        if (id == 1)
+        {
+            if (uiManager != null && uiManager.txt_Debug1 != null)
+                uiManager.txt_Debug1.text = str;
+        }
+        else if (uiManager != null && uiManager.txt_Debug != null)
             uiManager.txt_Debug.text = str;
     }
 

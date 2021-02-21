@@ -29,6 +29,11 @@ namespace PRESENTATION
 
         }
 
+        public void OnEnable()
+        {
+            EventManager.Raise<GetLeaderboardEvent>(new GetLeaderboardEvent());
+        }
+
         // Update is called once per frame
         void Update()
         {
