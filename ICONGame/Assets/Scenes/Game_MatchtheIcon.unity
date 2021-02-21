@@ -36095,7 +36095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoOfLayers: 4
-  BaseURL: https://139.59.37.53:9907/?a=
+  BaseURL: https://139.59.37.53:9907/?a=leaderboard
 --- !u!4 &1669006549
 Transform:
   m_ObjectHideFlags: 0
