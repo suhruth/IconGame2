@@ -19,7 +19,7 @@ public class AppManager : MonoBehaviour
     private static IServer server;
     public static IServer webServer { get { if (server == null) server = new RemoteServer(); return server; } }
 
-    public string BaseURL = "https://139.59.37.53:9907/?a=leaderboard";
+    public string BaseURL = "https://139.59.37.53:9907/?a=";
 
     // Start is called before the first frame update
     void Start()

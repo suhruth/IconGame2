@@ -28,6 +28,8 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         if (anim != null)
         {
             anim.SetBool("PlayPulse", false);
+            anim.Play("ScaleUPDown", -1, 0f);
+            anim.speed = 0;
         }
     }
 
@@ -89,6 +91,7 @@ public class Question : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         anim.SetBool("PlayPulse", true);
         pulseTimer = 1.25f;
+        anim.speed = 1;
     }
 
     Vector2 dragOrgPos = new Vector2();

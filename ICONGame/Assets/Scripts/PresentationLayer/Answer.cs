@@ -27,7 +27,11 @@ public class Answer : MonoBehaviour, IDropHandler
     public void Clean()
     {
         if (anim != null)
+        {
             anim.SetBool("PlayPulse", false);
+            anim.Play("ScaleUPDown", -1, 0f);
+            anim.speed = 0;
+        }
     }
 
     // Start is called before the first frame update
@@ -58,6 +62,7 @@ public class Answer : MonoBehaviour, IDropHandler
     {
         anim.SetBool("PlayPulse", true);
         pulseTimer = 1.25f;
+        anim.speed = 1;
     }
 
     public void OnClick_Answer()
