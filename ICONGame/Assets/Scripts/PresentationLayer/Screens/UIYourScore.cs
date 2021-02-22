@@ -17,7 +17,7 @@ namespace PRESENTATION
         public List<Text> layerTotalPoints = new List<Text>();
         public Text txt_totalScore;
 
-        public Button btn_MainMenu;
+        public Button btn_MainMenu, btn_LeaderBoard;
         public Button btn_Quit;
         public AudioClip ac;
         public SoundManager SM;
@@ -26,6 +26,7 @@ namespace PRESENTATION
         {
             SM.OnOptionClick(ac);
             btn_MainMenu.onClick.AddListener(MainMenu_OnClick);
+            btn_LeaderBoard.onClick.AddListener(OnClick_LeaderBoard);
             btn_Quit.onClick.AddListener(Quit_OnClick);
 
             EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
@@ -36,22 +37,21 @@ namespace PRESENTATION
             EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         private void Quit_OnClick()
         {
-            EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
+            //EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
         }
 
         private void MainMenu_OnClick()
         {
             EventManager.Raise<MainMenuUIEvent>(new MainMenuUIEvent { });
         }
-
+        public void OnClick_LeaderBoard()
+        {
+            EventManager.Raise<LeaderBoardUIEvent>(new LeaderBoardUIEvent());
+        }
 
         public void OnPlayerScoreEvent(IEventBase obj)
         {

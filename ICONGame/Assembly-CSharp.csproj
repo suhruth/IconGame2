@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\PresentationLayer\Screens\UILayer.cs" />
     <Compile Include="Assets\Scripts\PresentationLayer\UIScreen.cs" />
     <Compile Include="Assets\Scripts\PresentationLayer\Screens\UISignIn.cs" />
+    <Compile Include="Assets\Scripts\WebServer\CertificationVerify.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
