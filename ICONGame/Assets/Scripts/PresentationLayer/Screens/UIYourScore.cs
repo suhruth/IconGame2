@@ -30,11 +30,12 @@ namespace PRESENTATION
             btn_LeaderBoard.onClick.AddListener(OnClick_LeaderBoard);
             btn_Quit.onClick.AddListener(Quit_OnClick);
 
-            EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
-             EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
+            //EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
+           //  EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
         }
         public void OnEnable()
         {
+            EventManager.Listen<SetPlayerScoreEvent>(OnPlayerScoreEvent);
             EventManager.Raise<GetPlayerScoreEvent>(new GetPlayerScoreEvent());
         }
 
