@@ -21,6 +21,7 @@ namespace PRESENTATION
         public Button btn_Quit;
         public AudioClip ac;
         public SoundManager SM;
+        [SerializeField] GameObject LeaderboardScreen_MainmenuBtn, LeaderboardScreen_QuitBtn;
         // Start is called before the first frame update
         void Start()
         {
@@ -51,6 +52,8 @@ namespace PRESENTATION
         public void OnClick_LeaderBoard()
         {
             EventManager.Raise<LeaderBoardUIEvent>(new LeaderBoardUIEvent());
+            LeaderboardScreen_MainmenuBtn.SetActive(false);
+            LeaderboardScreen_QuitBtn.SetActive(true);
         }
 
         public void OnPlayerScoreEvent(IEventBase obj)

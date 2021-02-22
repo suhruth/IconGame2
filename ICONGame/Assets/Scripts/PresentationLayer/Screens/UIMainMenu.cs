@@ -14,7 +14,7 @@ namespace PRESENTATION
         //public Button btn_Prizes;
         public Button btn_Quit;
 
-
+        [SerializeField] GameObject LeaderboardScreen_MainmenuBtn, LeaderboardScreen_QuitBtn;
 
         // Start is called before the first frame update
         void Start()
@@ -45,6 +45,8 @@ namespace PRESENTATION
         public void OnClick_LeaderBoard() 
         {
             EventManager.Raise<LeaderBoardUIEvent>(new LeaderBoardUIEvent());
+            LeaderboardScreen_MainmenuBtn.SetActive(true);
+            LeaderboardScreen_QuitBtn.SetActive(false);
         }
         public void OnClick_Prizes() 
         {
@@ -52,7 +54,8 @@ namespace PRESENTATION
         }
         public void OnClick_Quit() 
         {
-            EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
+            //EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
         }
     }
 }

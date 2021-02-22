@@ -11,12 +11,14 @@ namespace PRESENTATION
     {
         public GameObject content;
         public GameObject itemPrefab;
-        public Button btn_MainMenu;
+        public Button btn_MainMenu, btn_QuitBtn;
 
         // Start is called before the first frame update
         void Start()
         {
             btn_MainMenu.onClick.AddListener(MainMenu_OnClick);
+            btn_QuitBtn.onClick.AddListener(OnQuitBtn);
+
 
             if (itemPrefab == null)
                 Debug.LogError("Invalid item prefab");
@@ -34,11 +36,6 @@ namespace PRESENTATION
             EventManager.Raise<GetLeaderboardEvent>(new GetLeaderboardEvent());
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         public void MainMenu_OnClick()
         {
@@ -92,6 +89,11 @@ namespace PRESENTATION
                     }
                 }
             }
+        }
+
+        public void OnQuitBtn()
+        {
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
         }
 
     }
