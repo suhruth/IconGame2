@@ -14236,7 +14236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Company
+  m_Text: Enter Your Mail Id
 --- !u!222 &571727581
 CanvasRenderer:
   m_ObjectHideFlags: 0

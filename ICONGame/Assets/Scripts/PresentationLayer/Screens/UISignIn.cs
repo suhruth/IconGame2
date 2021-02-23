@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CustomEvent;
+using System;
 
 
 namespace PRESENTATION
@@ -22,13 +23,6 @@ namespace PRESENTATION
             if (btn_Submit != null)
                 btn_Submit.onClick.AddListener(SubmitButton_OnClick);
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         private bool ValidateInputFields()
         {
             if (txt_ErrorMsg != null)
@@ -36,13 +30,18 @@ namespace PRESENTATION
 
             if (input_UserName.text.Length == 0)
             {
-                txt_ErrorMsg.text = "Empty User Name";
+                txt_ErrorMsg.text = "Enter User Name";
                 return false;
             }
-
             if (input_CompanyName.text.Length == 0)
             {
-                txt_ErrorMsg.text = "Empty Company Name";
+                txt_ErrorMsg.text = "Enter Your Mail Id";
+                return false;
+            }
+            string s = input_CompanyName.text;
+            if (!s.Contains("@"))
+            {
+                txt_ErrorMsg.text = "Enter Your Mail Id";
                 return false;
             }
 
