@@ -43,7 +43,7 @@ namespace PRESENTATION
         private void Quit_OnClick()
         {
             //EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
-            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/thank-you/");
         }
 
         private void MainMenu_OnClick()

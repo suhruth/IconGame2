@@ -93,7 +93,7 @@ namespace PRESENTATION
 
         public void OnQuitBtn()
         {
-            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/thank-you/");
         }
 
     }

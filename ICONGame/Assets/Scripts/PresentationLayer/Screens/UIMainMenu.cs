@@ -55,7 +55,7 @@ namespace PRESENTATION
         public void OnClick_Quit() 
         {
             //EventManager.Raise<QuitUIEvent>(new QuitUIEvent());
-            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/conference/");
+            Application.OpenURL("https://ciscosbsummit2021.marcomarabiamea.com/thank-you/");
         }
     }
 }
