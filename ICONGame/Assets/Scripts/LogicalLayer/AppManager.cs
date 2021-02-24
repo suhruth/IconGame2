@@ -38,6 +38,7 @@ public class AppManager : MonoBehaviour
         for (int i = 0; i < NoOfLayers; i++)
             scores.Add(new LayerScore());
 
+        EventManager.Listen<SubmitSignInCredentialsEvent>(OnSubmitSignInCredentialsEvent);
         EventManager.Listen<SubmitUserCredentialsEvent>(OnSubmitUserCredentialsEvent);
         EventManager.Listen<MainMenuUIEvent>(OnMainMenuEvent);
         EventManager.Listen<PlayGameUIEvent>(OnPlayGameEvent);
@@ -56,6 +57,8 @@ public class AppManager : MonoBehaviour
         UIManager.SetDebugText(0, "");
     }
 
+    bool sendSignInStatus = false;
+    SignInStatusEvent signInStatus;
     bool sendShowScreen = false;
     UIScreenType screen = UIScreenType.None;
 
@@ -66,6 +69,12 @@ public class AppManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (sendSignInStatus)
+        {
+            EventManager.Raise<SignInStatusEvent>(signInStatus);
+            sendSignInStatus = false;
+        }
+
         if (sendShowScreen && screen != UIScreenType.None)
         {
             EventManager.Raise<ShowUIScreenEvent>(new ShowUIScreenEvent { _screen = screen });
@@ -104,6 +113,15 @@ public class AppManager : MonoBehaviour
         EventManager.Raise<SetLeaderboardEvent>(leaderBoard);
     }
 
+
+    public void OnSubmitSignInCredentialsEvent(IEventBase obj)
+    {
+        if (obj is SubmitSignInCredentialsEvent)
+        {
+            SubmitSignInCredentialsEvent signInCred = (SubmitSignInCredentialsEvent)obj;
+            WebServerManager.UpdateSignInCredentials(signInCred.userName, signInCred.email, OnSignInSuccessfully, OnSignInFailed);
+        }
+    }
     public void OnSubmitUserCredentialsEvent(IEventBase obj)
     {
         if (obj is SubmitUserCredentialsEvent)
@@ -115,7 +133,6 @@ public class AppManager : MonoBehaviour
             screen = UIScreenType.MainMenu;
         }
     }
-
 
     private void OnMainMenuEvent(IEventBase obj)
     {
@@ -196,6 +213,20 @@ public class AppManager : MonoBehaviour
     }
 
     #region NETWORKING
+
+    private void OnSignInFailed(string obj, string code)
+    {
+        signInStatus = new SignInStatusEvent { status = false, Msg = obj };
+        sendSignInStatus = true;
+        Debug.Log("Signin Failed........");
+    }
+
+    private void OnSignInSuccessfully(SignInData obj)
+    {
+        signInStatus =new SignInStatusEvent { status = obj.Status, Msg = "Successfull"};
+        sendSignInStatus = true;
+        Debug.Log("Signin Successfull........");
+    }
 
     private void OnSendScoreToServerFailed(string obj, string code)
     {

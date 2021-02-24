@@ -2,6 +2,15 @@
 using System;
 using System.Collections.Generic;
 
+public class SignInData
+{
+    [JsonProperty("status")]
+    public bool Status { get; set; }
+
+    [JsonProperty("message")]
+    public string Message { get; set; }
+
+}
 public class LeaderboardItem
 {
     [JsonProperty("id")]

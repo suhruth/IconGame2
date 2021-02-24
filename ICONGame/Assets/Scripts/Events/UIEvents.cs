@@ -13,7 +13,7 @@ namespace CustomEvent
 
 
     #region FROM_UI
-
+    public class SubmitSignInCredentialsEvent : IEventBase { public string userName; public string email; }
     public class SubmitUserCredentialsEvent : IEventBase { public string userName; public string companyName; }
     public class MainMenuUIEvent : IEventBase { }
     public class PlayGameUIEvent : IEventBase { }
@@ -44,6 +44,8 @@ namespace CustomEvent
     public class SetPlayerScoreEvent : IEventBase { public List<LayerScore> layers = new List<LayerScore>(); public int totalScore; }
 
     public class SetLeaderboardEvent : IEventBase { public LeaderboardData leaderboard = new LeaderboardData(); }
+
+    public class SignInStatusEvent : IEventBase { public bool status; public string Msg; }
 
     #endregion // MAINMENU_EVENTS_TO_UI
 

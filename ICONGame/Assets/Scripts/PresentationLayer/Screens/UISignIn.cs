@@ -22,6 +22,8 @@ namespace PRESENTATION
         {
             if (btn_Submit != null)
                 btn_Submit.onClick.AddListener(SubmitButton_OnClick);
+
+            EventManager.Listen<SignInStatusEvent>(OnSignInStatuEvent);
         }
         private bool ValidateInputFields()
         {
@@ -70,9 +72,24 @@ namespace PRESENTATION
             if (!ValidateInputFields())
                 return;
 
+            Debug.Log("Submit Sign In on btn Click : " + input_UserName.text + "  " + input_CompanyName.text);
+            EventManager.Raise<SubmitSignInCredentialsEvent>(new SubmitSignInCredentialsEvent { userName = input_UserName.text, email = input_CompanyName.text });
+        }
 
-            Debug.Log("Submit on click : " + input_UserName.text + "  " + input_CompanyName.text);
-            EventManager.Raise<SubmitUserCredentialsEvent>(new SubmitUserCredentialsEvent { userName = input_UserName.text, companyName = input_CompanyName.text });
+        public void OnSignInStatuEvent(IEventBase obj)
+        {
+            if (obj is SignInStatusEvent)
+            {
+                SignInStatusEvent signIn = (SignInStatusEvent)obj;
+                if (signIn.status)
+                {
+                    Debug.Log("Submit on successfull Sign In : " + input_UserName.text + "  " + input_CompanyName.text);
+                    EventManager.Raise<SubmitUserCredentialsEvent>(new SubmitUserCredentialsEvent { userName = input_UserName.text, companyName = input_CompanyName.text });
+                }
+                else if (txt_ErrorMsg != null)
+                        txt_ErrorMsg.text = signIn.Msg;
+            }
+        
         }
 
     }

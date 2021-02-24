@@ -126,6 +126,7 @@ namespace FRAMEWORK.WebServer
                 OnSuccessHandler = (value) =>
                 {
                     string tempStr = value;
+                    
                     int startVal = tempStr.IndexOf("[") + 2;
                     int endVal = tempStr.IndexOf("]") - 1;
                     string subStr = value.Substring(startVal, endVal - startVal);
@@ -163,7 +164,7 @@ namespace FRAMEWORK.WebServer
                         successHandler?.Invoke(lbData);
                     }
                     else
-                    { 
+                    {
                         exceptionHandler?.Invoke("Failed deserialization", "");
                     }
                 },
@@ -238,12 +239,55 @@ namespace FRAMEWORK.WebServer
         #endregion //CORE_FUNCTIONS
 
 
+        public static void UpdateSignInCredentials(string userName, string email, Action<SignInData> successHandler, Action<string, string> exceptionHandler)
+        {
+            string apiStr = "verifyuser&username={0}&email={1}";
+            WWWForm form = new WWWForm();
+            NetworkRequestSignal requestSignal = new NetworkRequestSignal()
+            {
+                RequestType = RequestType.PostAndGet,
+                URL = string.Format(apiStr, userName, email),
+                OnSuccessHandler = (value) =>
+                {
+                    string tempStr = value;
+                    if (tempStr.Contains(""))
+                    {
+                        string[] fields = tempStr.Split(',');
+                        SignInData sdData = new SignInData();
+                        for (int j = 0; j < fields.Length; j++)
+                        {
+                            string testStr2 = fields[j].Replace("\"", "");
+                            testStr2 = testStr2.Replace("{", "");
+                            testStr2 = testStr2.Replace("}", "");
+                            string[] vals = testStr2.Split(':');
+                            if (vals.Length > 1)
+                            {
+                                if (vals[0].Equals("status"))
+                                    sdData.Status = vals[1] == "true" ? true : false;
+                                if (vals[0].Equals("message"))
+                                    sdData.Message = vals[1];
+                            }
+                        }
+                        successHandler?.Invoke(sdData);
+                    }
+                    else
+                    {
+                        exceptionHandler?.Invoke("Failed deserialization", "");
+                    }
+
+                },
+                OnExceptionHandler = exceptionHandler,
+                Form = form
+            };
+            OnRequestEvent(requestSignal);
+        }
+
         // Add to Contacts Group
-        public static void UpdateUserScore(string userName, string companyName,string score, Action successHandler, Action<string, string> exceptionHandler)
+        public static void UpdateUserScore(string userName, string companyName, string score, Action successHandler, Action<string, string> exceptionHandler)
         {
             string apiStr = "saveuser&username={0}&companyname={1}&score={2}";
             WWWForm form = new WWWForm();
-            Post(string.Format(apiStr, userName,companyName,score), form, successHandler, exceptionHandler);
+            Post(string.Format(apiStr, userName, companyName, score), form, successHandler, exceptionHandler);
         }
 
         public static void GetLeaderBoardData(Action<LeaderboardData> successHandler, Action<string, string> exceptionHandler)

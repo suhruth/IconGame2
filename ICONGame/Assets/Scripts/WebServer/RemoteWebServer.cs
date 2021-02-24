@@ -298,16 +298,25 @@ namespace WebServer
             //UIManager.SetDebugText(request.downloadHandler.text);
 
             string tempStr = request.downloadHandler.text;
-            int startVal = tempStr.IndexOf("[")+2;
-            int endVal = tempStr.IndexOf("]") - 1;
-            if (startVal < endVal)
+
+            if(tempStr.Contains("status"))
             {
                 UIManager.SetDebugText(0, request.downloadHandler.text);
                 successHandler?.Invoke(request.downloadHandler.text);
             }
             else
             {
-                exceptionHandler?.Invoke("Failed Fetching data", "");
+                int startVal = tempStr.IndexOf("[") + 2;
+                int endVal = tempStr.IndexOf("]") - 1;
+                if (startVal < endVal)
+                {
+                    UIManager.SetDebugText(0, request.downloadHandler.text);
+                    successHandler?.Invoke(request.downloadHandler.text);
+                }
+                else
+                {
+                    exceptionHandler?.Invoke("Failed Fetching data", "");
+                }
             }
            
 
