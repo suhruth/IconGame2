@@ -129,43 +129,50 @@ namespace FRAMEWORK.WebServer
                     
                     int startVal = tempStr.IndexOf("[") + 2;
                     int endVal = tempStr.IndexOf("]") - 1;
-                    string subStr = value.Substring(startVal, endVal - startVal);
-                    string[] items = subStr.Split('}');
-                    List<LeaderboardItem> lbs = new List<LeaderboardItem>();
-                    if (items.Length > 0)
+                    if (startVal < endVal)
                     {
-                        lbs.Clear();
-                        for (int i = 0; i < items.Length; i++)
+                        string subStr = value.Substring(startVal, endVal - startVal);
+                        string[] items = subStr.Split('}');
+                        List<LeaderboardItem> lbs = new List<LeaderboardItem>();
+                        if (items.Length > 0)
                         {
-                            string[] fields = items[i].Split(',');
-                            LeaderboardItem lbItem = new LeaderboardItem();
-                            for (int j = 0; j < fields.Length; j++)
+                            lbs.Clear();
+                            for (int i = 0; i < items.Length; i++)
                             {
-                                string testStr2 = fields[j].Replace("\"", "");
-                                testStr2 = testStr2.Replace("{", "");
-                                string[] vals = testStr2.Split(':');
-                                if (vals.Length > 1)
+                                string[] fields = items[i].Split(',');
+                                LeaderboardItem lbItem = new LeaderboardItem();
+                                for (int j = 0; j < fields.Length; j++)
                                 {
-                                    if (vals[0].Equals("id"))
-                                        lbItem.ID = vals[1];
-                                    if (vals[0].Equals("username"))
-                                        lbItem.Username = vals[1];
-                                    if (vals[0].Equals("companyname"))
-                                        lbItem.CompanyName = vals[1];
-                                    if (vals[0].Equals("score"))
-                                        lbItem.Score = vals[1];
+                                    string testStr2 = fields[j].Replace("\"", "");
+                                    testStr2 = testStr2.Replace("{", "");
+                                    string[] vals = testStr2.Split(':');
+                                    if (vals.Length > 1)
+                                    {
+                                        if (vals[0].Equals("id"))
+                                            lbItem.ID = vals[1];
+                                        if (vals[0].Equals("username"))
+                                            lbItem.Username = vals[1];
+                                        if (vals[0].Equals("companyname"))
+                                            lbItem.CompanyName = vals[1];
+                                        if (vals[0].Equals("score"))
+                                            lbItem.Score = vals[1];
 
+                                    }
                                 }
+                                lbs.Add(lbItem);
                             }
-                            lbs.Add(lbItem);
+                            LeaderboardData lbData = new LeaderboardData();
+                            lbData.Items = lbs;
+                            successHandler?.Invoke(lbData);
                         }
-                        LeaderboardData lbData = new LeaderboardData();
-                        lbData.Items = lbs;
-                        successHandler?.Invoke(lbData);
+                        else
+                        {
+                            exceptionHandler?.Invoke("Failed deserialization", "");
+                        }
                     }
                     else
                     {
-                        exceptionHandler?.Invoke("Failed deserialization", "");
+                        exceptionHandler?.Invoke("Empty Leaderboard Data received", "");
                     }
                 },
                 OnExceptionHandler = exceptionHandler,

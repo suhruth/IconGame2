@@ -223,7 +223,7 @@ public class AppManager : MonoBehaviour
 
     private void OnSignInSuccessfully(SignInData obj)
     {
-        signInStatus =new SignInStatusEvent { status = obj.Status, Msg = "Successfull"};
+        signInStatus =new SignInStatusEvent { status = obj.Status, Msg = obj.Message };
         sendSignInStatus = true;
         Debug.Log("Signin Successfull........");
     }
